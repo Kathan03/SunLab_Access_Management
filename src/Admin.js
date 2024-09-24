@@ -9,6 +9,8 @@ function Admin() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [filteredAccesses, setFilteredAccesses] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 11;
 
   const accessesCollectionRef = collection(db, "Accesses");
 
@@ -17,7 +19,6 @@ function Admin() {
       const data = await getDocs(accessesCollectionRef);
       setAccesses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-
     getAccesses();
   }, []);
 
@@ -30,7 +31,32 @@ function Admin() {
       return matchesStudentId && matchesStartDate && matchesEndDate;
     });
     setFilteredAccesses(filtered);
+    setCurrentPage(1);
   };
+
+  const downloadCSV = () => {
+    const data = filteredAccesses.length > 0 ? filteredAccesses : accesses;
+    const csvRows = [
+      ['Student ID', 'Timestamp'],
+      ...data.map(access => [
+        access.Student_ID,
+        new Date(access.timestamp.seconds * 1000).toLocaleString()
+      ])
+    ];
+    const csvString = csvRows.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'access_records.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const totalPages = Math.ceil((filteredAccesses.length > 0 ? filteredAccesses.length : accesses.length) / recordsPerPage);
+  const startIndex = (currentPage - 1) * recordsPerPage;
+  const currentAccesses = (filteredAccesses.length > 0 ? filteredAccesses : accesses).slice(startIndex, startIndex + recordsPerPage);
 
   return (
     <div className="AdminContainer">
@@ -61,6 +87,9 @@ function Admin() {
         <button className="filter-button" onClick={filterAccesses}>
           Filter
         </button>
+        <button className="filter-button" onClick={downloadCSV} style={{ marginTop: '10px' }}>
+          Download Report
+        </button>
       </div>
       <div className="RecordsSection">
         <h2>Access Records</h2>
@@ -72,7 +101,7 @@ function Admin() {
             </tr>
           </thead>
           <tbody>
-            {(filteredAccesses.length > 0 ? filteredAccesses : accesses).map((access) => (
+            {currentAccesses.map((access) => (
               <tr key={access.id}>
                 <td>{access.Student_ID}</td>
                 <td>{new Date(access.timestamp.seconds * 1000).toLocaleString()}</td>
@@ -80,6 +109,17 @@ function Admin() {
             ))}
           </tbody>
         </table>
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`pagination-button ${currentPage === index + 1 ? 'active' : ''}`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

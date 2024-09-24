@@ -1,4 +1,3 @@
-// LandingPage.js
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './App.css';
@@ -9,7 +8,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   const handleAdminAccess = () => {
-    if (credentials) {
+    if (credentials === 'Prof. Matthew' || credentials === 'Kathan') {
       setIsAdminAccess(true);
       navigate('/admin');
     } else {
@@ -33,7 +32,7 @@ function LandingPage() {
           <h2 className="admin-title">Admin Access</h2>
           <input
             type="text"
-            placeholder="Enter any credentials"
+            placeholder="Enter credentials"
             value={credentials}
             onChange={(e) => setCredentials(e.target.value)}
             className="admin-input"

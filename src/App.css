@@ -121,27 +121,46 @@ h1, h2 {
 .nav-button {
   padding: 10px 20px;
   font-size: 1em;
-  background-color: #2575fc;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin: 30px 30px;
+  transition: background-color 0.3s, transform 0.2s;
+  margin: 10px;
 }
 
-.nav-button + .nav-button {
-  margin-top: 20px;
+.nav-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.filter-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 .admin-credentials {
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 20px; 
+  text-align: center; 
 }
 
 .admin-input {
   padding: 10px;
-  margin: 10px 0;
+  margin: 10px 0; 
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -149,14 +168,42 @@ h1, h2 {
 .submit-button {
   padding: 10px 15px;
   font-size: 1em;
-  background-color: #2575fc;
+  background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; 
+  transform: scale(1.05);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #007bff;
+  background-color: #ffffff;
+  color: #007bff;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.submit-button:hover {
-  background-color: #6a11cb;
+.pagination-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-button.active {
+  background-color: #007bff;
+  color: white;
 }

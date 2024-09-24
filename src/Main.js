@@ -1,25 +1,22 @@
-// Main.js
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { db } from './firebase-config';
 import { collection, addDoc } from 'firebase/firestore';
 import './App.css';
 
 function Main() {
   const [studentId, setStudentId] = useState('');
-  const [timestamp, setTimestamp] = useState('');
   const accessesCollectionRef = collection(db, "Accesses");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newTimestamp = new Date(timestamp);
+    const newTimestamp = new Date(); // Use current timestamp
     await addDoc(accessesCollectionRef, {
       Student_ID: studentId,
       timestamp: newTimestamp,
     });
 
     setStudentId('');
-    setTimestamp('');
   };
 
   return (
@@ -33,14 +30,6 @@ function Main() {
             placeholder="Enter Student ID"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
-            required
-            className="form-input"
-          />
-          <label>Timestamp</label>
-          <input
-            type="datetime-local"
-            value={timestamp}
-            onChange={(e) => setTimestamp(e.target.value)}
             required
             className="form-input"
           />
