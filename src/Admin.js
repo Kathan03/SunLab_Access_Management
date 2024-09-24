@@ -88,7 +88,7 @@ function Admin() {
           Filter
         </button>
         <button className="filter-button" onClick={downloadCSV} style={{ marginTop: '10px' }}>
-          Download Report
+          Download Records
         </button>
       </div>
       <div className="RecordsSection">
