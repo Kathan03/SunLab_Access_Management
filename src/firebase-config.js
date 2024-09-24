@@ -3,6 +3,7 @@ import {getFirestore} from '@firebase/firestore'
 
 var APIKey = "AIzaSyA-EZGvHzOeZTLJ2FGl3M1UxVzhjxv0ouk" 
 
+// forming connection with the firestore database
 const firebaseConfig = {
     apiKey: APIKey,
     authDomain: "cmpsc487-project-1.firebaseapp.com",
