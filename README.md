@@ -34,6 +34,12 @@ This schema allows for efficient querying and indexing, enabling operations such
 
 
 ## File Description
+
+#### App.js:
+#### LandingPage.js:
+#### Admin.js:
+#### Main.js:
+#### App.css:
 ...
 
 
